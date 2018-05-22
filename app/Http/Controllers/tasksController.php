@@ -49,11 +49,13 @@ class tasksController extends Controller
     public function store(Request $request)
     {   
         $this->validate($request, [
+            'status' => 'required|max:191',
             'content' => 'required|max:191',
         ]);
 
         
-         $tasks = new tasks;
+        $tasks = new tasks;
+        $tasks->status = $request->status;
         $tasks->content = $request->content;
         $tasks->save();
 
@@ -101,8 +103,15 @@ class tasksController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
+    $this->validate($request, [
+        'status' => 'required|max:191',
+        'content' => 'required|max:191',
+         ]);
+
+        
          $tasks = tasks::find($id);
+          $tasks->status = $request->status; 
         $tasks->content = $request->content;
         $tasks->save();
 
