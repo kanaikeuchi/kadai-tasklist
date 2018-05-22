@@ -47,7 +47,12 @@ class tasksController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $this->validate($request, [
+            'content' => 'required|max:191',
+        ]);
+
+        
          $tasks = new tasks;
         $tasks->content = $request->content;
         $tasks->save();
@@ -113,7 +118,7 @@ class tasksController extends Controller
      */
     public function destroy($id)
     {
-         $tasks = taska::find($id);
+         $tasks = tasks::find($id);
         $tasks->delete();
 
         return redirect('/');
